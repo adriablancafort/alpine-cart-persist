@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+}
+
+const { title, price, description, image } = Astro.props;
+---
+
+<article style="padding-bottom: 50px;" >
+    <img src={image} alt={title} height="100px" width="100px" />
+    <h2>{title}</h2>
+    <p>{price}</p>
+    <p>{description}</p>
+
+    <button x-data @click="$store.cart.addToCart({id: 'Product2', title: 'Product 2', quantity: 1, price: 20.99, description: 'Description 2', images: ['https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg']})">Add to cart</button>
+</article>

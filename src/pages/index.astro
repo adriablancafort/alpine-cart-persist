@@ -1,0 +1,63 @@
+---
+import Card from "../components/Card.astro"
+import CartItem from "../components/CartItem.astro"
+
+interface ProductCart {
+    id: number;
+    title: string;
+    price: number;
+    description: string;
+    category: {
+        id: number;
+        name: string;
+        image: string;
+    };
+    image: string;
+}
+
+const offset = 0;
+const limit = 5;
+
+const products: ProductCart[] = await (await fetch(`https://fakestoreapi.com/products`)).json();
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		<script src="../js/script.js"></script>
+
+		<title>Alpine Cart Persist</title>
+	</head>
+	<body style="display: flex;">
+		<div style="flex: 50%;">
+			<div style="padding: 50px;">
+				<h1>Choose products</h1>
+				{products.map((product) => (
+					<Card
+					title={product.title}
+					price={product.price}
+					description={product.description}
+					image={product.image}
+					/>
+				))}
+			</div>
+		</div>
+		<div style="flex: 50%;" >
+			<div x-data="{ cart: $store.cart }" x-init="cart.getCart()">
+				<div style="position: sticky; top: 0px; padding: 10px;">
+					<h1>Your cart</h1>
+					<p>Total: <span x-text="cart.total"></span></p>
+					<p>Items: <span x-text="cart.count"></span></p>
+					<template x-for="item in cart.items">
+						<CartItem />
+					</template>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

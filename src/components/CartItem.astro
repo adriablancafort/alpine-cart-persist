@@ -1,0 +1,14 @@
+<article style="padding-bottom: 10px;">
+  <p>Cart Item</p>
+  <img
+      x-bind:src="item.images[0]"
+      :alt="item.title"
+      height="100px"
+      width="100px"
+  />
+  <h2 x-text="item.title"></h2>
+  <p x-text="item.price"></p>
+  <p x-text="item.description"></p>
+
+  <button @click="$store.cart.removeFromCart({id: 'Product2', title: 'Product 2', quantity: 1, price: 20.99, description: 'Description 2', images: ['https://i.imgur.com/axsyGpD.jpeg']})">Remove</button>
+</article>
